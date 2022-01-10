@@ -1,13 +1,17 @@
 package Application;
 
+import Data.Product;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HtmlParser {
+
+    private ArrayList<Product> productArrayList;
 
     public static void indexingSite() {
         Document document = null;
@@ -30,9 +34,10 @@ public class HtmlParser {
         assert document != null;
 
 
-        Elements listData = document.select("div.row");
-        for (Element element : listData.select("a"))
+        Elements listData = document.select("body");
+        for (Element element: listData.select("a")) {
             System.out.println(element.text());
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {

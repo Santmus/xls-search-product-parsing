@@ -12,11 +12,13 @@ import java.util.List;
 
 public class XLSWritter {
 
-    public static void createDocument() throws IOException {
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        HSSFSheet sheet = workbook.createSheet("Product");
+    public static int rowNum = 0;
+    public static HSSFSheet sheet;
 
-        int rowNum = 0;
+    public static void createDocument() throws IOException {
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        sheet = workbook.createSheet("Product");
 
         Row row = sheet.createRow(rowNum);
         row.createCell(0).setCellValue("Ufc");
