@@ -8,14 +8,13 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class XLSWritter {
 
     public static int rowNum = 0;
     public static HSSFSheet sheet;
 
-    public static void createDocument() throws IOException {
+    public static void createDocument(ArrayList<Product> dataList) {
 
         HSSFWorkbook workbook = new HSSFWorkbook();
         sheet = workbook.createSheet("Product");
@@ -25,7 +24,11 @@ public class XLSWritter {
         row.createCell(1).setCellValue("Count");
         row.createCell(2).setCellValue("Price");
 
-        FileOutputStream out = null;
+        for (Product dataModel : dataList) {
+            addInfoToExcel(sheet, ++rowNum, dataModel);
+        }
+
+        FileOutputStream out;
         try {
             out = new FileOutputStream("result.xls");
             workbook.write(out);
