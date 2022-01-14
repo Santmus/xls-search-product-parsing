@@ -1,23 +1,20 @@
 package Application;
 
 import Data.Product;
+import lombok.SneakyThrows;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class XLSWritter {
 
     public static int rowNum = 0;
-    public static HSSFSheet sheet;
 
-    public static void createDocument(ArrayList<Product> dataList) {
-
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        sheet = workbook.createSheet("Product");
+    @SneakyThrows
+    public static void createDocument(ArrayList<Product> dataList, String nameArticle, FileOutputStream outputStream, HSSFWorkbook workbook, HSSFSheet sheet) {
 
         Row row = sheet.createRow(rowNum);
         row.createCell(0).setCellValue("Ufc");
@@ -27,15 +24,7 @@ public class XLSWritter {
         for (Product dataModel : dataList) {
             addInfoToExcel(sheet, ++rowNum, dataModel);
         }
-
-        FileOutputStream out;
-        try {
-            out = new FileOutputStream("result.xls");
-            workbook.write(out);
-        } catch (IOException e){
-            System.err.println("File can`t create. Please wait a minute");
-        }
-        System.out.println("Excel file success create!");
+        workbook.write(outputStream);
     }
 
     public static void addInfoToExcel(HSSFSheet sheet, int rowNum, Product product) {
